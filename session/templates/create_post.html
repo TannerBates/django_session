@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{%load crispy_forms_tags %} 
+{% block title %}Create Post{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-primary" type="submit">Create Post</button>
+  </form>
+</div>
+{% endif %}
+  {% endblock %}

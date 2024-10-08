@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Posts{% endblock %}
+{%load crispy_forms_tags %} 
+
+{% if user.is_authenticated %}
+{% block content %}
+<div class="container">
+  <a href="{% url 'logout' %}" style="text-decoration: none; color: red;">Logout</a>
+</div>
+<div class="container">
+  <h2>Posts</h2>
+  <button class="btn btn-primary"><a href="{% url 'create_post' %}" style="text-decoration: none; color: white;">New Post</a></button>
+  <ul>
+    {% for post in posts %}
+      <li>{{ post.title }} - {{ post.author }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+{% endif %}
