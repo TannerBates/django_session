@@ -53,6 +53,10 @@ a.dropdown-item.logout:hover {
     text-decoration: none;
 }
 
+.login-link:hover {
+    text-decoration: none;
+}
+
 .post-main {
     margin-top: 10px;
     font-family: copperplate, fantasy;
@@ -115,4 +119,16 @@ a.dropdown-item.logout:hover {
 
 .register-link {
     margin-top: 10px;
+}
+
+.bi.bi-box-arrow-right {
+    margin-right: 5px;
+}
+
+.bi.bi-person {
+    margin-right: 5px;
+}
+
+.bi.bi-gear {
+    margin-right: 5px;
 }

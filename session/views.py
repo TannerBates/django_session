@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Post, Like
+from .models import Post, Like, Profile, User
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def post_list(request):
+    users = User.objects.all()
     posts = Post.objects.all()
-    return render(request, 'post_list.html', {'posts': posts})
+    return render(request, 'post_list.html', {'posts': posts, 'users': users})
+
+
 
 @login_required(login_url='/login/')
 def like_post(request, id):
@@ -75,7 +78,8 @@ def view_post(request):
     pass
 
 
-# @login_required(login_url='/session/login/')
-# def post_list(request):
-#     posts = Post.objects.all()
-#     return render(request, 'post_list.html', {'posts': posts})
+
+@login_required(login_url='/login/')
+def profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return render(request, 'profile.html', {'user': user})

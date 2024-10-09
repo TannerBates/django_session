@@ -27,3 +27,9 @@ class Like(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True)
+
+    def __str__(self):
+        return self.user.username

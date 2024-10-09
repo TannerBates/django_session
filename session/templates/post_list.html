@@ -37,10 +37,10 @@
           {{ user.username }}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item profile" href="#">Profile</a>
-          <a class="dropdown-item profile" href="#">Settings</a>
+          <a class="dropdown-item profile" href="#"><i class="bi bi-person"></i>Profile</a>
+          <a class="dropdown-item profile" href="#"><i class="bi bi-gear"></i>Settings</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item logout" href="{% url 'logout' %}">Logout</a>
+          <a class="dropdown-item logout" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i>Logout</a>
         </div>
       </div>
     </span>
@@ -64,7 +64,7 @@
   {% for post in posts %}
   <div class="card post-card">
     <div class="card-header">
-      <a href="#" class="author">{{ post.author }}</a>
+      <a href="{% url 'profile' user.id %}" class="author">{{ post.author }}</a>
       {% if user.is_authenticated %}
       {% if request.user != post.author %}
       <span class="follow-button">
@@ -85,5 +85,8 @@
     </div>
   </div>
   {% endfor %}
+
+
 </div>
+
 {% endblock %}
