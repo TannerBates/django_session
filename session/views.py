@@ -1,11 +1,27 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Post
+from .models import Post, Like
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+def post_list(request):
+    posts = Post.objects.all()
+    return render(request, 'post_list.html', {'posts': posts})
+
+@login_required(login_url='/login/')
+def like_post(request, id):
+    post = get_object_or_404(Post, pk=id)
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect(request.META.get('HTTP_REFERER')) # redirect back to previous page
+
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -34,11 +50,11 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('post_list')
 
 
 
-@login_required(login_url='/session/login/')
+@login_required(login_url='/login/')
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -54,7 +70,12 @@ def create_post(request):
 
 
 
-@login_required(login_url='/session/login/')
-def post_list(request):
-    posts = Post.objects.all()
-    return render(request, 'post_list.html', {'posts': posts})
+@login_required(login_url='/login/')
+def view_post(request):
+    pass
+
+
+# @login_required(login_url='/session/login/')
+# def post_list(request):
+#     posts = Post.objects.all()
+#     return render(request, 'post_list.html', {'posts': posts})

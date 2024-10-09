@@ -3,12 +3,17 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="container">
-  <form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-primary" type="submit">Login</button>
-    <p>Need an account? <a href="{% url 'register' %}">Sign Up!</a></p>
-  </form>
+<h1 class="session-name">SESSION</h1>
+<div class="container main">
+  <div class="card">
+    <div class="card-body login">
+      <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary login" type="submit">Login</button>
+        <p class="register-link">Need an account? <a href="{% url 'register' %}" >Sign Up!</a></p>
+      </form>
+    </div>
+  </div>
 </div>
   {% endblock %}

@@ -1,0 +1,118 @@
+.navbar-brand{
+    font-family: copperplate, fantasy;
+}
+
+.nav-item {
+    margin-left: 20px;
+}
+
+.bi.bi-chat-dots {
+    color: white;
+}
+
+.bi.bi-columns {
+    color: white;
+}
+
+.bi.bi-plus-circle {
+    color: white;
+}
+
+
+a.dropdown-item.profile {
+    color: black;
+}
+
+a.dropdown-item.profile:hover {
+    color: black;
+}
+
+a.dropdown-item.logout {
+    text-decoration: none;
+    color: red;
+}
+
+a.dropdown-item.logout:hover {
+    color: red;
+}
+
+.dropdown-toggle {
+    margin-right: 55px;
+}
+
+.login {
+    margin-right: 10px;
+    width: 100px;
+}
+
+.register {
+    width: 100px;
+}
+
+.login-link {
+    text-decoration: none;
+}
+
+.post-main {
+    margin-top: 10px;
+    font-family: copperplate, fantasy;
+}
+
+.post-card {
+    width: 48rem; 
+    margin: auto; 
+    margin-bottom: 20px;
+}
+
+.author {
+    text-decoration: none;
+}
+
+.author:hover {
+    text-decoration: none;
+}
+
+.follow-button {
+    float: right;
+}
+
+.bi.bi-plus-lg {
+    margin-right: 10px;
+}
+
+.bi.bi-heart-fill {
+    color: red;
+}
+
+.bi.bi-heart {
+    color: red;
+}
+
+.card-body.login {
+    width: 500px;
+}
+
+.container.main {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: auto;
+}
+
+.session-name {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: auto; 
+    margin-top: 200px; 
+    font-family: copperplate, fantasy;
+}
+
+
+.btn.btn-primary.login {
+    width: 100%;
+}
+
+.register-link {
+    margin-top: 10px;
+}

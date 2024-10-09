@@ -1,20 +1,89 @@
 {% extends 'base.html' %}
-{% block title %}Posts{% endblock %}
+{% block title %}Session{% endblock %}
 {%load crispy_forms_tags %} 
 
-{% if user.is_authenticated %}
+
 {% block content %}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Session</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#"><i class="bi bi-house h4" title="Home"></i> <span class="sr-only">(current)</span></a>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link actions" href="#"><i class="bi bi-chat-dots h4" title="Messages"></i></a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link actions" href="#"><i class="bi bi-columns h4" title="For You"></i></a>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a href="{% url 'create_post' %}" class="nav-link new-post"><i class="bi bi-plus-circle h4" title="New Post"></i></a>
+      </li>
+      {% endif %}
+    </ul>
+    {% if user.is_authenticated %}
+    <span class="navbar-text">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ user.username }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item profile" href="#">Profile</a>
+          <a class="dropdown-item profile" href="#">Settings</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item logout" href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
+    </span>
+    {% else %}
+    <span class="navbar-text">
+      <form class="form-inline">
+        <button class="btn btn-success login" type="button"><a href="{% url 'login' %}" class="login-link">Login</a></button>
+        <button class="btn btn-primary register" type="button"><a href="{% url 'register' %}" class="login-link">Register</a></button>
+      </form>
+    </span>
+    {% endif %}
+  </div>
+</nav>
+
+
+
 <div class="container">
-  <a href="{% url 'logout' %}" style="text-decoration: none; color: red;">Logout</a>
-</div>
-<div class="container">
-  <h2>Posts</h2>
-  <button class="btn btn-primary"><a href="{% url 'create_post' %}" style="text-decoration: none; color: white;">New Post</a></button>
-  <ul>
-    {% for post in posts %}
-      <li>{{ post.title }} - {{ post.author }}</li>
-    {% endfor %}
-  </ul>
+  
+  <h2 class="post-main">Posts</h2>
+
+  {% for post in posts %}
+  <div class="card post-card">
+    <div class="card-header">
+      <a href="#" class="author">{{ post.author }}</a>
+      {% if user.is_authenticated %}
+      {% if request.user != post.author %}
+      <span class="follow-button">
+        <button class="btn btn-primary"><i class="bi bi-plus-lg"></i>Follow</button>
+      </span>
+      {% endif %}
+      {% endif %}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ post.title }}</h5>
+      <p class="card-text">{{ post.content }}</p>
+        {% if request.user in post.likes.all %}
+        <a href="{% url 'like_post' post.id %}" class="card-link"><i class="bi bi-heart-fill h5"></i></a>&nbsp;{{ post.number_of_likes }}
+        {% else %}
+        <a href="{% url 'like_post' post.id %}" class="card-link"><i class="bi bi-heart h5"></i></a>&nbsp;{{ post.number_of_likes }}
+        {% endif %}
+      <a href="#" class="card-link"><i class="bi bi-chat h5"></i></a>
+    </div>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}
-{% endif %}
