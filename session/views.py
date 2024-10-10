@@ -7,9 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def post_list(request):
-    users = User.objects.all()
-    posts = Post.objects.all()
-    return render(request, 'post_list.html', {'posts': posts, 'users': users})
+    posts = Post.objects.all().order_by('-created_at')
+    return render(request, 'post_list.html', {'posts': posts})
 
 
 
@@ -80,6 +79,6 @@ def view_post(request):
 
 
 @login_required(login_url='/login/')
-def profile(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
     return render(request, 'profile.html', {'user': user})

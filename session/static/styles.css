@@ -132,3 +132,8 @@ a.dropdown-item.logout:hover {
 .bi.bi-gear {
     margin-right: 5px;
 }
+
+p.date_posted {
+    display: inline;
+    margin-left: 20px;
+}
