@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Session{% endblock %}
 {%load crispy_forms_tags %} 
-
+{% for user in users %}
 
 {% block content %}
 
@@ -64,7 +64,11 @@
   {% for post in posts %}
   <div class="card post-card">
     <div class="card-header">
+<<<<<<< HEAD
       <img src="{{ user.profile.profile_picture.url }}" class="mr-3 rounded-circle article-img" alt="User image" style="height: 64px;"><a href="{% url 'profile' post.author.username %}" class="author">{{ post.author }}</a>
+=======
+      <a href="{% url 'profile' post.author.username %}" class="author">{{ post.author }}</a>
+>>>>>>> origin/main
       {% if user.is_authenticated %}
       {% if request.user != post.author %}
       <span class="follow-button">
@@ -83,10 +87,15 @@
         {% endif %}
         <a href="{% url 'post_detail' post.id %}" class="card-link"><i class="bi bi-chat h5"></i></a>&nbsp;{{ post.comments_count }}
     </div>
+    <div class="card-footer text-muted">
+      {{ post.created_at|timesince }} ago
+    </div>
   </div>
   {% endfor %}
 
 
 </div>
 
+
 {% endblock %}
+{% endfor %}

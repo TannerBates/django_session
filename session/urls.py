@@ -12,7 +12,10 @@ urlpatterns = [
     path('create_post/', views.create_post, name='create_post'),
     path('like/<int:id>/', views.like_post, name='like_post'),
     path('profile/<str:username>/', views.profile, name='profile'),
+<<<<<<< HEAD
     path('post/<int:id>/', views.post_detail, name='post_detail'),
     path('like_comment/<int:id>/', views.like_comment, name='like_comment'),
+=======
+>>>>>>> origin/main
     # path('posts/', views.post_list, name='post_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

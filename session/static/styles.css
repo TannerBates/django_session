@@ -133,6 +133,7 @@ a.dropdown-item.logout:hover {
     margin-right: 5px;
 }
 
+<<<<<<< HEAD
 
 #container {
     max-width: 1000px;
@@ -155,4 +156,9 @@ textarea.form-control {
 
 label.requiredField {
     display: none;
+=======
+p.date_posted {
+    display: inline;
+    margin-left: 20px;
+>>>>>>> origin/main
 }

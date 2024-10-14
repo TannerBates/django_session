@@ -8,8 +8,9 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def post_list(request):
-    posts = Post.objects.annotate(comments_count=Count('comments')).all()
-    return render(request, 'post_list.html', {'posts': posts})
+    users = User.objects.all()
+    posts = Post.objects.all()
+    return render(request, 'post_list.html', {'posts': posts, 'users': users})
 
 
 
@@ -97,28 +98,8 @@ def profile(request, username):
 
 
 @login_required(login_url='/login/')
-def post_detail(request, id):
-    post = get_object_or_404(Post, id=id)
-    comments_count = post.comments.count()
-    comments = post.comments.all()
-
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit=False)
-            new_comment.post = post
-            new_comment.author = request.user
-            new_comment.save()
-            return redirect('post_detail', id=post.id)
-
-    else:
-        comment_form = CommentForm()
-
-    context = {
-        'post': post,
-        'comments_count': comments_count,
-        'comments': comments,
-        'comment_form': comment_form,
-    }
+def profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return render(request, 'profile.html', {'user': user})
 
     return render(request, 'post_detail.html', context)
