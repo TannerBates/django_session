@@ -12,6 +12,54 @@
 <body>
     <main>
         {% block content %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Session</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#"><i class="bi bi-house h4" title="Home"></i> <span class="sr-only">(current)</span></a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link actions" href="#"><i class="bi bi-chat-dots h4" title="Messages"></i></a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link actions" href="#"><i class="bi bi-columns h4" title="For You"></i></a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a href="{% url 'create_post' %}" class="nav-link new-post"><i class="bi bi-plus-circle h4" title="New Post"></i></a>
+                </li>
+                {% endif %}
+              </ul>
+              {% if user.is_authenticated %}
+              <span class="navbar-text">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user.username }}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item profile" href="#"><i class="bi bi-person"></i>Profile</a>
+                    <a class="dropdown-item profile" href="#"><i class="bi bi-gear"></i>Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item logout" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+                  </div>
+                </div>
+              </span>
+              {% else %}
+              <span class="navbar-text">
+                <form class="form-inline">
+                  <button class="btn btn-success login" type="button"><a href="{% url 'login' %}" class="login-link">Login</a></button>
+                  <button class="btn btn-primary register" type="button"><a href="{% url 'register' %}" class="login-link">Register</a></button>
+                </form>
+              </span>
+              {% endif %}
+            </div>
+          </nav>
         {% endblock %}
     </main>
 

@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}{{ user.username }}'s Profile{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+{% load crispy_forms_tags %} 
 {% load static %}
 {% block content %}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'post_list' %}">Session</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,25 +51,21 @@
       </span>
       {% endif %}
     </div>
-  </nav>
+</nav>
 
-  <div class="container-fluid" style="margin-left: 100px;">
-    <h2 class="post-main">{{ user.username }}'s Posts</h2>
 
-    <div class="card" style="width: 18rem; float: left;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-  </div>
-  {% for post in posts %}
-  <div class="container">
+
+<div class="container" style="margin-top: 20px;">
     <div class="card post-card">
         <div class="card-header">
-        <a href="{% url 'profile' post.author.username %}" class="author">{{ post.author }}</a>
+            <img src="{{ user.profile.profile_picture.url }}" class="mr-3 rounded-circle article-img" alt="User image" style="height: 64px;"><a href="{% url 'profile' post.author.username %}" class="author">{{ post.author }}</a>
+        {% if user.is_authenticated %}
+        {% if request.user != post.author %}
+        <span class="follow-button">
+            <button class="btn btn-primary"><i class="bi bi-plus-lg"></i>Follow</button>
+        </span>
+        {% endif %}
+        {% endif %}
         </div>
         <div class="card-body">
         <h5 class="card-title">{{ post.title }}</h5>
@@ -77,10 +75,31 @@
             {% else %}
             <a href="{% url 'like_post' post.id %}" class="card-link"><i class="bi bi-heart h5"></i></a>&nbsp;{{ post.number_of_likes }}
             {% endif %}
-        <a href="#" class="card-link"><i class="bi bi-chat h5"></i></a>
+            <a href="{% url 'post_detail' post.id %}" class="card-link"><i class="bi bi-chat h5"></i></a>&nbsp;{{ comments_count }}
         </div>
     </div>
-    {% endfor %}
-  </div>
 
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form|crispy }}
+        <button type="submit" class="btn btn-primary" style="margin-left: 171px;">comment</button>
+    </form>
+</div>
+
+{% for comment in comments %}
+<div class="container" style="max-width: 768px; margin-top: 50px;">
+    <div class="media mb-4">
+        <img src="{{ user.profile.profile_picture.url }}" class="mr-3 rounded-circle article-img" alt="User image" style="height: 64px;">
+        <div class="media-body">
+            <h5 class="mt-0">{{ comment.author.username }}</h5>
+            <p>{{ comment.content }} &nbsp;&nbsp; {% if request.user in comment.liked_by.all %}
+            <a href="{% url 'like_comment' comment.id %}" class="card-link"><i class="bi bi-heart-fill h5"></i></a>&nbsp;{{ comment.like_count }}
+            {% else %}
+            <a href="{% url 'like_comment' comment.id %}" class="card-link"><i class="bi bi-heart h5"></i></a>&nbsp;{{ comment.like_count }}
+            {% endif %} </p>
+            <small class="text-muted">Posted on {{ comment.created_at }}</small>
+        </div>
+    </div>
+</div>
+    {% endfor %}
 {% endblock %}

@@ -7,7 +7,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Session</a>
+  <a class="navbar-brand" href="{% url 'post_list' %}">Session</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -64,7 +64,7 @@
   {% for post in posts %}
   <div class="card post-card">
     <div class="card-header">
-      <a href="{% url 'profile' user.id %}" class="author">{{ post.author }}</a>
+      <img src="{{ user.profile.profile_picture.url }}" class="mr-3 rounded-circle article-img" alt="User image" style="height: 64px;"><a href="{% url 'profile' post.author.username %}" class="author">{{ post.author }}</a>
       {% if user.is_authenticated %}
       {% if request.user != post.author %}
       <span class="follow-button">
@@ -81,7 +81,7 @@
         {% else %}
         <a href="{% url 'like_post' post.id %}" class="card-link"><i class="bi bi-heart h5"></i></a>&nbsp;{{ post.number_of_likes }}
         {% endif %}
-      <a href="#" class="card-link"><i class="bi bi-chat h5"></i></a>
+        <a href="{% url 'post_detail' post.id %}" class="card-link"><i class="bi bi-chat h5"></i></a>&nbsp;{{ post.comments_count }}
     </div>
   </div>
   {% endfor %}

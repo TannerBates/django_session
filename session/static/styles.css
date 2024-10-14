@@ -132,3 +132,27 @@ a.dropdown-item.logout:hover {
 .bi.bi-gear {
     margin-right: 5px;
 }
+
+
+#container {
+    max-width: 1000px;
+    float: right;
+}
+
+#div_id_content {
+    max-width: 768px;
+    margin-left: 171px;
+}
+
+/* .requiredField {
+    display: none;
+} */
+
+textarea.form-control {
+    resize: none;
+    height: 40px;
+}
+
+label.requiredField {
+    display: none;
+}
