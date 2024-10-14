@@ -122,6 +122,6 @@ def post_detail(request, id):
     }
 
     return render(request, 'post_detail.html', context)
-def profile(request, username):
-    user = get_object_or_404(User, username=username)
-    return render(request, 'profile.html', {'user': user})
+
+
+
