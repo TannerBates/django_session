@@ -37,8 +37,6 @@ def like_comment(request, id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -100,7 +98,7 @@ def profile(request, username):
 def post_detail(request, id):
     post = get_object_or_404(Post, id=id)
     comments_count = post.comments.count()
-    comments = post.comments.all()
+    comments = post.comments.filter(parent_comment=None)
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -108,6 +106,9 @@ def post_detail(request, id):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.author = request.user
+            parent_comment_id = request.POST.get('parent_comment')
+            if parent_comment_id:
+                new_comment.parent_comment = get_object_or_404(Comment, id=parent_comment_id)
             new_comment.save()
             return redirect('post_detail', id=post.id)
 
