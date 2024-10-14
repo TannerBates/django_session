@@ -64,11 +64,7 @@
   {% for post in posts %}
   <div class="card post-card">
     <div class="card-header">
-<<<<<<< HEAD
       <img src="{{ user.profile.profile_picture.url }}" class="mr-3 rounded-circle article-img" alt="User image" style="height: 64px;"><a href="{% url 'profile' post.author.username %}" class="author">{{ post.author }}</a>
-=======
-      <a href="{% url 'profile' post.author.username %}" class="author">{{ post.author }}</a>
->>>>>>> origin/main
       {% if user.is_authenticated %}
       {% if request.user != post.author %}
       <span class="follow-button">
